@@ -84,6 +84,13 @@ export declare enum ImageType {
     png = "png",
     jpg = "jpg"
 }
+export declare enum VideoCodec {
+    H264 = "H264",
+    HEVC = "HEVC",
+    JPEG = "JPEG",
+    AppleProRes422 = "AppleProRes422",
+    AppleProRes4444 = "AppleProRes4444"
+}
 export declare type ImageParameters = {
     imageType: ImageType;
     quality: number | null;
@@ -132,6 +139,7 @@ export declare type CameraRecordingOptions = {
     mute?: boolean;
     mirror?: boolean;
     videoBitrate?: number;
+    codec?: VideoCodec;
 };
 export declare type CameraCapturedPicture = {
     width: number;
@@ -199,6 +207,7 @@ export declare type ConstantsType = {
     WhiteBalance: typeof WhiteBalance;
     VideoQuality: any;
     VideoStabilization: any;
+    VideoCodec: typeof VideoCodec;
 };
 export declare type CameraProps = ViewProps & {
     type?: number | keyof typeof CameraType;

@@ -94,6 +94,14 @@ export enum ImageType {
   jpg = 'jpg',
 }
 
+export enum VideoCodec {
+  H264 = 'H264',
+  HEVC = 'HEVC',
+  JPEG = 'JPEG',
+  AppleProRes422 = 'AppleProRes422',
+  AppleProRes4444 = 'AppleProRes4444',
+}
+
 export type ImageParameters = {
   imageType: ImageType;
   quality: number | null;
@@ -152,6 +160,8 @@ export type CameraRecordingOptions = {
   mirror?: boolean;
   // Android
   videoBitrate?: number;
+  // iOS
+  codec?: VideoCodec;
 };
 
 export type CameraCapturedPicture = {
@@ -221,6 +231,7 @@ export type ConstantsType = {
   WhiteBalance: typeof WhiteBalance;
   VideoQuality: any;
   VideoStabilization: any;
+  VideoCodec: typeof VideoCodec;
 };
 
 export type CameraProps = ViewProps & {

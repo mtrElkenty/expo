@@ -91,6 +91,7 @@ export default class Camera extends React.Component<CameraProps> {
     WhiteBalance: CameraManager.WhiteBalance,
     VideoQuality: CameraManager.VideoQuality,
     VideoStabilization: CameraManager.VideoStabilization || {},
+    VideoCodec: CameraManager.VideoCodec,
   };
 
   // Values under keys from this object will be transformed to native options

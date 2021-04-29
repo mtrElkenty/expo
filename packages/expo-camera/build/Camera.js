@@ -160,6 +160,7 @@ Camera.Constants = {
     WhiteBalance: CameraManager.WhiteBalance,
     VideoQuality: CameraManager.VideoQuality,
     VideoStabilization: CameraManager.VideoStabilization || {},
+    VideoCodec: CameraManager.VideoCodec,
 };
 // Values under keys from this object will be transformed to native options
 Camera.ConversionTables = ConversionTables;

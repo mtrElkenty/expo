@@ -88,5 +88,13 @@ export var ImageType;
     ImageType["png"] = "png";
     ImageType["jpg"] = "jpg";
 })(ImageType || (ImageType = {}));
+export var VideoCodec;
+(function (VideoCodec) {
+    VideoCodec["H264"] = "H264";
+    VideoCodec["HEVC"] = "HEVC";
+    VideoCodec["JPEG"] = "JPEG";
+    VideoCodec["AppleProRes422"] = "AppleProRes422";
+    VideoCodec["AppleProRes4444"] = "AppleProRes4444";
+})(VideoCodec || (VideoCodec = {}));
 export { PermissionStatus };
 //# sourceMappingURL=Camera.types.js.map

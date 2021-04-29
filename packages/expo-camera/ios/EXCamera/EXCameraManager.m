@@ -73,7 +73,15 @@ UM_EXPORT_MODULE(ExponentCameraManager);
                @"cinematic": @(EXCameraVideoStabilizationModeCinematic),
                @"auto": @(EXCameraAVCaptureVideoStabilizationModeAuto)
                },
+           @"VideoCodec": @{
+                   @"H264": @(EXCameraVideoCodecH264),
+                   @"HEVC": @(EXCameraVideoCodecHEVC),
+                   @"JPEG": @(EXCameraVideoCodecJPEG),
+                   @"AppleProRes422": @(EXCameraVideoCodecAppleProRes422),
+                   @"AppleProRes4444": @(EXCameraVideoCodecAppleProRes4444),
+              },
            };
+         
 }
 
 - (NSArray<NSString *> *)supportedEvents
