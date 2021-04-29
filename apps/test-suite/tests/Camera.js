@@ -287,6 +287,12 @@ export async function test(t, { setPortalChild, cleanupPortal }) {
               console.log({ error });
             });
         });
+
+        t.it('returns available codecs', async () => {
+          const codecs = await Camera.getAvailableVideoCodecsAsync();
+          t.expect(codecs).toBeDefined();
+          t.expect(codecs.includes('hvc1')).toBe(true);
+        });
       }
 
       let recordedFileUri = null;
