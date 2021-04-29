@@ -338,6 +338,35 @@ UM_EXPORT_METHOD_AS(getAvailablePictureSizes,
   resolve([[[self class] pictureSizes] allKeys]);
 }
 
+UM_EXPORT_METHOD_AS(getAvailableVideoCodecsAsync,
+                    resolve:(UMPromiseResolveBlock)resolve
+                    rejecter:(UMPromiseRejectBlock)reject)
+{
+    AVCaptureSession *session = [AVCaptureSession new];
+    
+    [session beginConfiguration];
+
+    NSError *error = nil;
+    AVCaptureDevice *captureDevice = [EXCameraUtils deviceWithMediaType:AVMediaTypeVideo preferringPosition: AVCaptureDevicePositionFront];
+    AVCaptureDeviceInput *captureDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
+    
+    if ([session canAddInput: captureDeviceInput]) {
+        [session addInput: captureDeviceInput];
+    }
+
+    [session commitConfiguration];
+    
+
+    AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc]  init];
+    
+    if ([session canAddOutput: movieFileOutput]) {
+        [session addOutput: movieFileOutput];
+    }
+    
+    resolve([movieFileOutput availableVideoCodecTypes]);
+}
+
+
 UM_EXPORT_METHOD_AS(getPermissionsAsync,
                     getPermissionsAsync:(UMPromiseResolveBlock)resolve
                     rejecter:(UMPromiseRejectBlock)reject)
@@ -357,5 +386,7 @@ UM_EXPORT_METHOD_AS(requestPermissionsAsync,
                                                                resolve:resolve
                                                                 reject:reject];
 }
+
+
 
 @end

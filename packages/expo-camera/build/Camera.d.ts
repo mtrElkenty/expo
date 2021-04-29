@@ -3,6 +3,7 @@ import { BarCodeScanningResult, CameraCapturedPicture, CameraMountError, CameraN
 export default class Camera extends React.Component<CameraProps> {
     static isAvailableAsync(): Promise<boolean>;
     static getAvailableCameraTypesAsync(): Promise<('front' | 'back')[]>;
+    static getAvailableVideoCodecsAsync(): Promise<string[]>;
     static Constants: ConstantsType;
     static ConversionTables: {
         type: Record<"front" | "back", string | number | undefined>;

@@ -542,22 +542,30 @@ previewPhotoSampleBuffer:(CMSampleBufferRef)previewPhotoSampleBuffer
     [connection setVideoOrientation:[EXCameraUtils videoOrientationForDeviceOrientation:[[UIDevice currentDevice] orientation]]];
     
     if (options[@"codec"]) {
-        AVVideoCodecType videoCodecType = [EXCameraUtils getVideoCodecForType: [options[@"codec"] integerValue]];
-                
-        if (@available(iOS 10, *)) {
-            if ([self.movieFileOutput.availableVideoCodecTypes containsObject: videoCodecType]) {
-                [self.movieFileOutput setOutputSettings: @{AVVideoCodecKey: videoCodecType} forConnection: connection];
-                
-                self.videoCodecType = videoCodecType;
-                
-            } else {
-                UMLogWarn(@"%s: Video Codec '%@' is not supported on this device.", __func__, videoCodecType);
-              }
-            }
+        AVVideoCodecType videoCodecType = [EXCameraUtils videoCodecForType: [options[@"codec"] integerValue]];
+                    
+        if ([self.movieFileOutput.availableVideoCodecTypes containsObject: videoCodecType]) {
+            [self.movieFileOutput setOutputSettings: @{AVVideoCodecKey: videoCodecType} forConnection: connection];
+            
+            self.videoCodecType = videoCodecType;
+        }
+        
         else {
-           UMLogWarn(@"%s: Setting videoCodec is only supported above iOS version 10.", __func__);
-       }
+            UMLogWarn(@"%s: Video Codec '%@' is not supported on this device.", __func__, videoCodecType);
+            
+            NSString *videoCodecErrorMessage = [NSString stringWithFormat: @"Video Codec '%@' is not supported on this device", videoCodecType];
+            
+            reject(@"E_RECORDING_FAILED", videoCodecErrorMessage, nil);
+            
+            [self cleanupMovieFileCapture];
+            _videoRecordedResolve = nil;
+            _videoRecordedReject = nil;
+            
+            return;
+        }
     }
+     
+    
     
     bool canBeMirrored = connection.isVideoMirroringSupported;
     bool shouldBeMirrored = options[@"mirror"] && [options[@"mirror"] boolValue];
@@ -894,7 +902,7 @@ previewPhotoSampleBuffer:(CMSampleBufferRef)previewPhotoSampleBuffer
       if (videoCodec == nil) {
           videoCodec = [self.movieFileOutput.availableVideoCodecTypes firstObject];
       }
-      
+            
       _videoRecordedResolve(@{ @"uri": outputFileURL.absoluteString, @"codec": videoCodec });
   } else if (_videoRecordedReject != nil) {
     _videoRecordedReject(@"E_RECORDING_FAILED", @"An error occurred while recording a video.", error);

@@ -97,9 +97,16 @@ export default class Camera extends React.Component {
         }
         return await CameraManager.getAvailableCameraTypesAsync();
     }
+    static async getAvailableVideoCodecsAsync() {
+        if (!CameraManager.getAvailableVideoCodecsAsync) {
+            throw new UnavailabilityError('Camera', 'getAvailableVideoCodecsAsync');
+        }
+        return await CameraManager.getAvailableVideoCodecsAsync();
+    }
     static async getPermissionsAsync() {
         return CameraManager.getPermissionsAsync();
     }
+    // NOTE -- UPDATE DOCS - this is static
     static async requestPermissionsAsync() {
         return CameraManager.requestPermissionsAsync();
     }

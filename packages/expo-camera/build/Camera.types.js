@@ -90,11 +90,26 @@ export var ImageType;
 })(ImageType || (ImageType = {}));
 export var VideoCodec;
 (function (VideoCodec) {
-    VideoCodec["H264"] = "H264";
-    VideoCodec["HEVC"] = "HEVC";
-    VideoCodec["JPEG"] = "JPEG";
-    VideoCodec["AppleProRes422"] = "AppleProRes422";
-    VideoCodec["AppleProRes4444"] = "AppleProRes4444";
+    /**
+     * @platforms ios
+     */
+    VideoCodec["H264"] = "avc1";
+    /**
+     * @platforms ios
+     */
+    VideoCodec["HEVC"] = "hvc1";
+    /**
+     * @platforms ios
+     */
+    VideoCodec["JPEG"] = "jpeg";
+    /**
+     * @platforms ios
+     */
+    VideoCodec["AppleProRes422"] = "apcn";
+    /**
+     * @platforms ios
+     */
+    VideoCodec["AppleProRes4444"] = "ap4h";
 })(VideoCodec || (VideoCodec = {}));
 export { PermissionStatus };
 //# sourceMappingURL=Camera.types.js.map

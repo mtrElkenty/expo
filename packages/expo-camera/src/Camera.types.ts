@@ -95,11 +95,26 @@ export enum ImageType {
 }
 
 export enum VideoCodec {
-  H264 = 'H264',
-  HEVC = 'HEVC',
-  JPEG = 'JPEG',
-  AppleProRes422 = 'AppleProRes422',
-  AppleProRes4444 = 'AppleProRes4444',
+  /**
+   * @platforms ios
+   */
+  H264 = 'avc1',
+  /**
+   * @platforms ios
+   */
+  HEVC = 'hvc1',
+  /**
+   * @platforms ios
+   */
+  JPEG = 'jpeg',
+  /**
+   * @platforms ios
+   */
+  AppleProRes422 = 'apcn',
+  /**
+   * @platforms ios
+   */
+  AppleProRes4444 = 'ap4h',
 }
 
 export type ImageParameters = {

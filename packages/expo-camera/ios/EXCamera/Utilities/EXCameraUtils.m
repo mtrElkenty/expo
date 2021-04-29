@@ -97,7 +97,7 @@
    }
 }
 
-+(AVVideoCodecType) getVideoCodecForType: (EXCameraVideoCodec)videoCodecType
++(AVVideoCodecType) videoCodecForType: (EXCameraVideoCodec)videoCodecType
 {
     switch (videoCodecType) {
         case EXCameraVideoCodecH264:

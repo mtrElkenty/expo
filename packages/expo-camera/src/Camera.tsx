@@ -84,6 +84,14 @@ export default class Camera extends React.Component<CameraProps> {
     return await CameraManager.getAvailableCameraTypesAsync();
   }
 
+  static async getAvailableVideoCodecsAsync(): Promise<string[]> {
+    if (!CameraManager.getAvailableVideoCodecsAsync) {
+      throw new UnavailabilityError('Camera', 'getAvailableVideoCodecsAsync');
+    }
+
+    return await CameraManager.getAvailableVideoCodecsAsync();
+  }
+
   static Constants: ConstantsType = {
     Type: CameraManager.Type,
     FlashMode: CameraManager.FlashMode,
@@ -112,6 +120,7 @@ export default class Camera extends React.Component<CameraProps> {
     return CameraManager.getPermissionsAsync();
   }
 
+  // NOTE -- UPDATE DOCS - this is static
   static async requestPermissionsAsync(): Promise<PermissionResponse> {
     return CameraManager.requestPermissionsAsync();
   }
@@ -148,7 +157,6 @@ export default class Camera extends React.Component<CameraProps> {
     }
 
     const recordingOptions = ensureRecordingOptions(options);
-
     return await CameraManager.record(recordingOptions, this._cameraHandle);
   }
 
