@@ -111,7 +111,7 @@
         case EXCameraVideoCodecAppleProRes4444:
             return AVVideoCodecTypeAppleProRes4444;
         default:
-            return AVVideoCodecTypeH264;
+            return AVVideoCodecTypeHEVC;
     }
     
 }

@@ -106,7 +106,6 @@ export default class Camera extends React.Component {
     static async getPermissionsAsync() {
         return CameraManager.getPermissionsAsync();
     }
-    // NOTE -- UPDATE DOCS - this is static
     static async requestPermissionsAsync() {
         return CameraManager.requestPermissionsAsync();
     }

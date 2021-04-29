@@ -176,6 +176,7 @@ export async function test(t, { setPortalChild, cleanupPortal }) {
             t.expect(picture).toBeDefined();
             t.expect(picture.exif).toBeDefined();
             t.expect(picture.exif.LensModel).toMatch('back');
+            await cleanupPortal();
           });
 
           t.it('returns `exif.LensModel ~= front` if camera type is set to front', async () => {
@@ -186,6 +187,7 @@ export async function test(t, { setPortalChild, cleanupPortal }) {
             t.expect(picture).toBeDefined();
             t.expect(picture.exif).toBeDefined();
             t.expect(picture.exif.LensModel).toMatch('front');
+            await cleanupPortal();
           });
 
           t.it('returns `exif.DigitalZoom ~= false` if zoom is not set', async () => {
@@ -194,6 +196,7 @@ export async function test(t, { setPortalChild, cleanupPortal }) {
             t.expect(picture).toBeDefined();
             t.expect(picture.exif).toBeDefined();
             t.expect(picture.exif.DigitalZoomRatio).toBeFalsy();
+            await cleanupPortal();
           });
 
           t.it('returns `exif.DigitalZoom ~= false` if zoom is set to 0', async () => {
@@ -202,6 +205,7 @@ export async function test(t, { setPortalChild, cleanupPortal }) {
             t.expect(picture).toBeDefined();
             t.expect(picture.exif).toBeDefined();
             t.expect(picture.exif.DigitalZoomRatio).toBeFalsy();
+            await cleanupPortal();
           });
 
           let smallerRatio = null;
@@ -213,6 +217,7 @@ export async function test(t, { setPortalChild, cleanupPortal }) {
             t.expect(picture.exif).toBeDefined();
             t.expect(picture.exif.DigitalZoomRatio).toBeGreaterThan(0);
             smallerRatio = picture.exif.DigitalZoomRatio;
+            await cleanupPortal();
           });
 
           t.it(
@@ -223,6 +228,7 @@ export async function test(t, { setPortalChild, cleanupPortal }) {
               t.expect(picture).toBeDefined();
               t.expect(picture.exif).toBeDefined();
               t.expect(picture.exif.DigitalZoomRatio).toBeGreaterThan(smallerRatio);
+              await cleanupPortal();
             }
           );
         }
@@ -245,6 +251,43 @@ export async function test(t, { setPortalChild, cleanupPortal }) {
         t.expect(response).toBeDefined();
         t.expect(response.uri).toMatch(/^file:\/\//);
       });
+
+      if (Platform.OS === 'ios') {
+        t.it('returns the default codec of the video', async () => {
+          await mountAndWaitFor(<Camera ref={refSetter} style={style} />);
+          const recordingPromise = instance.recordAsync();
+          await waitFor(2500);
+          instance.stopRecording();
+          const response = await recordingPromise;
+          t.expect(response).toBeDefined();
+          t.expect(response.codec).toMatch('hvc1');
+        });
+
+        t.it('uses the specified codec', async () => {
+          await mountAndWaitFor(<Camera ref={refSetter} style={style} />);
+          const recordingPromise = instance.recordAsync({
+            codec: Camera.Constants.VideoCodec.H264,
+          });
+          await waitFor(2500);
+          instance.stopRecording();
+          const response = await recordingPromise;
+          t.expect(response).toBeDefined();
+          t.expect(response.codec).toMatch('avc1');
+        });
+
+        t.it('throws for an invalid codec', async () => {
+          await mountAndWaitFor(<Camera ref={refSetter} style={style} />);
+
+          await instance
+            .recordAsync({
+              codec: Camera.Constants.VideoCodec.AppleProRes4444,
+            })
+            .catch(error => {
+              t.expect(error.message).toMatch(/(?=.*codec)(?=.*is not supported)/i);
+              console.log({ error });
+            });
+        });
+      }
 
       let recordedFileUri = null;
 

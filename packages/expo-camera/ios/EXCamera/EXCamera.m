@@ -543,6 +543,9 @@ previewPhotoSampleBuffer:(CMSampleBufferRef)previewPhotoSampleBuffer
     
     if (options[@"codec"]) {
         AVVideoCodecType videoCodecType = [EXCameraUtils videoCodecForType: [options[@"codec"] integerValue]];
+        
+        
+        NSLog(@"videoCodecType: %@", videoCodecType);
                     
         if ([self.movieFileOutput.availableVideoCodecTypes containsObject: videoCodecType]) {
             [self.movieFileOutput setOutputSettings: @{AVVideoCodecKey: videoCodecType} forConnection: connection];
@@ -898,10 +901,15 @@ previewPhotoSampleBuffer:(CMSampleBufferRef)previewPhotoSampleBuffer
   }
   if (success && _videoRecordedResolve != nil) {
       AVVideoCodecType videoCodec = self.videoCodecType;
+      NSLog(@"videoCodec: %@", videoCodec);
+
       
       if (videoCodec == nil) {
           videoCodec = [self.movieFileOutput.availableVideoCodecTypes firstObject];
       }
+      
+      NSLog(@"videoCodec: %@", videoCodec);
+
             
       _videoRecordedResolve(@{ @"uri": outputFileURL.absoluteString, @"codec": videoCodec });
   } else if (_videoRecordedReject != nil) {
