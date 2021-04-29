@@ -275,7 +275,7 @@ export async function test(t, { setPortalChild, cleanupPortal }) {
           t.expect(response.codec).toMatch('avc1');
         });
 
-        t.it('throws for an invalid codec', async () => {
+        t.it('throws for an unavailable codec', async () => {
           await mountAndWaitFor(<Camera ref={refSetter} style={style} />);
 
           await instance
