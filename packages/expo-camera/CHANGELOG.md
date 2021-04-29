@@ -5,6 +5,7 @@
 ### 🛠 Breaking changes
 
 ### 🎉 New features
+- Add video codec option for recording in iOS ([#12772](https://github.com/expo/expo/pull/12772)) by [@ajsmth]
 
 ### 🐛 Bug fixes
 
