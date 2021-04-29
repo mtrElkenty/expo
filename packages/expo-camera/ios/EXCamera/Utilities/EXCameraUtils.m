@@ -97,42 +97,23 @@
    }
 }
 
-+(AVVideoCodecType) getVideoCodecForType: (EXCameraVideoCodec)videoCodecType  {
-    
-    if (@available(iOS 11, *)) {
-        switch (videoCodecType) {
-            case EXCameraVideoCodecH264:
-                return AVVideoCodecTypeH264;
-            case EXCameraVideoCodecHEVC:
-                return AVVideoCodecTypeHEVC;
-            case EXCameraVideoCodecJPEG:
-                return AVVideoCodecTypeJPEG;
-            case EXCameraVideoCodecAppleProRes422:
-                return AVVideoCodecTypeAppleProRes422;
-            case EXCameraVideoCodecAppleProRes4444:
-                return AVVideoCodecTypeAppleProRes4444;
-            default:
-                return AVVideoCodecTypeH264;
-        }
-    } else {
-        switch (videoCodecType) {
-            case EXCameraVideoCodecH264:
-                return AVVideoCodecH264;
-            case EXCameraVideoCodecHEVC:
-                UMLogWarn(@"HEVC is not available on this version of iOS, defaulting to @%", AVVideoCodecH264);
-                return AVVideoCodecH264;
-            case EXCameraVideoCodecJPEG:
-                return AVVideoCodecJPEG;
-            case EXCameraVideoCodecAppleProRes422:
-                UMLogWarn(@"AppleProRes422 is not available on this version of iOS, defaulting to @%", AVVideoCodecH264);
-                return AVVideoCodecH264;
-            case EXCameraVideoCodecAppleProRes4444:
-                UMLogWarn(@"AppleProRes4444 is not available on this version of iOS, defaulting to @%", AVVideoCodecH264);
-                return AVVideoCodecH264;
-            default:
-                return AVVideoCodecH264;
-        }
++(AVVideoCodecType) getVideoCodecForType: (EXCameraVideoCodec)videoCodecType
+{
+    switch (videoCodecType) {
+        case EXCameraVideoCodecH264:
+            return AVVideoCodecTypeH264;
+        case EXCameraVideoCodecHEVC:
+            return AVVideoCodecTypeHEVC;
+        case EXCameraVideoCodecJPEG:
+            return AVVideoCodecTypeJPEG;
+        case EXCameraVideoCodecAppleProRes422:
+            return AVVideoCodecTypeAppleProRes422;
+        case EXCameraVideoCodecAppleProRes4444:
+            return AVVideoCodecTypeAppleProRes4444;
+        default:
+            return AVVideoCodecTypeH264;
     }
+    
 }
 
 
